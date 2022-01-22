@@ -1,8 +1,2 @@
-django
-djangorestframework
-django-filter
-django-crispy-forms
-django-cors-headers
-psycopg2
-django-environ
-flake8
+-r requirements-dev.txt
+gunicorn
