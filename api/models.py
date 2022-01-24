@@ -1,5 +1,6 @@
 from django.db import models
-
+from model_utils.models import UUIDModel
+from django.utils import timezone
 # Create your models here.
 
 
@@ -34,3 +35,29 @@ class Point(models.Model):
 
     def __str__(self) -> str(point):
         return str(self.point)
+
+
+class Room(UUIDModel, models.Model):
+    name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(default=timezone.now)
+    posted_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        editable=False
+)
+
+
+class Message(UUIDModel, models.Model):
+    room = models.ForeignKey(
+        Room,
+        related_name='messages',
+        on_delete=models.CASCADE
+    )
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+    posted_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True, editable=False
+)
