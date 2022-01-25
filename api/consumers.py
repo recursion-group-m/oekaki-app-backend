@@ -7,16 +7,15 @@ from .models import Message
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
-    groups = ['broadcast']
 
     async def connect(self):
         await self.accept()
         print('ACCEPT')
 
-        # URL から room id を取得してインスタンス変数に
         self.room_id = self.scope['url_route']['kwargs']['room_id']
-        await self.channel_layer.group_add(  # グループにチャンネルを追加
-            self.room_id,
+        self.room_group_id = 'chat_%s' % self.room_id
+        await self.channel_layer.group_add(
+            self.room_group_id,
             self.channel_name,
         )
 
