@@ -3,7 +3,7 @@ import json
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
-from .models import Message
+from .models import Message, User
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
@@ -21,7 +21,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     async def disconnect(self, _close_code):
         await self.channel_layer.group_discard(  # グループからチャンネルを削除
-            self.room_id,
+            self.room_group_id,
             self.channel_name,
         )
         await self.close()
@@ -29,13 +29,14 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     async def receive_json(self, data):
         # websocket からメッセージを json 形式で受け取る
         message = data['message']  # 受信データからメッセージを取り出す
+        user = data['user']
         await self.createMessage(data)  # メッセージを DB に保存する
         await self.channel_layer.group_send(  # 指定グループにメッセージを送信する
-            self.room_id,
+            self.room_group_id,
             {
                 'type': 'chat_message',
                 'message': message,
-                'user': self.scope['user'].email,
+                'user': user,
             }
         )
 
@@ -52,8 +53,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     @database_sync_to_async
     def createMessage(self, event):
+        user = User.objects.filter(sub=event['user'])
         Message.objects.create(
             room_id=self.room_id,
             content=event['message'],
-            posted_by=self.scope['user'],
+            posted_by=user.first(),
         )

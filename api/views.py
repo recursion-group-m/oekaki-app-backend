@@ -1,6 +1,7 @@
 from rest_framework import viewsets
-from .models import Room, User, Paint, Point
+from .models import Message, Room, User, Paint, Point
 from .serializers import (
+    MessageSerializer,
     RoomSerializer,
     UserSerializer,
     PaintSerializer,
@@ -30,3 +31,8 @@ class PointViewSet(viewsets.ModelViewSet):
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.prefetch_related('messages')
     serializer_class = RoomSerializer
+
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
