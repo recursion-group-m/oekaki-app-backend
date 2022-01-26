@@ -6,5 +6,5 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'paints', PaintViewSet, basename='Paints')
 router.register(r'points', PointViewSet, basename='Points')
-router.register(r'chat', RoomViewSet)
+router.register(r'rooms', RoomViewSet)
 urlpatterns = router.urls
