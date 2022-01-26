@@ -44,8 +44,8 @@ class Room(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self) -> room_id:
-        return self.room_id
+    def __str__(self) -> str(room_id):
+        return str(self.room_id)
 
 
 class Message(models.Model):
@@ -62,5 +62,5 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self) -> message_id:
-        return self.message_id
+    def __str__(self) -> str(message_id):
+        return str(self.message_id)
