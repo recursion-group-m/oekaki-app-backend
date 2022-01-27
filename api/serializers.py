@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Paint, Point
+from .models import Message, Room, User, Paint, Point
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,3 +20,15 @@ class PointSerializer(serializers.ModelSerializer):
         model = Point
         fields = '__all__'
         depth = 1
+
+
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = '__all__'
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = '__all__'

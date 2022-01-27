@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 # Create your models here.
 
 
@@ -34,3 +34,33 @@ class Point(models.Model):
 
     def __str__(self) -> str(point):
         return str(self.point)
+
+
+class Room(models.Model):
+    room_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str(room_id):
+        return str(self.room_id)
+
+
+class Message(models.Model):
+    message_id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False)
+    room = models.ForeignKey(
+        Room,
+        related_name='messages',
+        on_delete=models.CASCADE
+    )
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str(message_id):
+        return str(self.message_id)
