@@ -159,7 +159,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
      'http://127.0.0.1:3000',
-     'https://https://oekaki-app.netlify.app'
+     'https://oekaki-app.netlify.app'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
