@@ -3,7 +3,7 @@ import json
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
-from .models import Message, User
+from .models import Message
 
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
@@ -53,9 +53,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     @database_sync_to_async
     def createMessage(self, event):
-        user = User.objects.filter(sub=event['user'])
         Message.objects.create(
             room_id=self.room_id,
             content=event['message'],
-            posted_by=user.first(),
+            posted_by=event['user'],
         )
