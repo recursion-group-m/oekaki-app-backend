@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'corsheaders',
-    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -88,17 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-ASGI_APPLICATION = 'backend.asgi.application'
-
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(env('REDIS_URL'), env('REDIS_PORT'))],
-        },
-    },
-}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

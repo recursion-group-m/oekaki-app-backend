@@ -9,6 +9,4 @@ flake8
 dj-database-url
 dj-static
 python-decouple
-channels
-channels-redis
 django-model-utils

@@ -13,54 +13,29 @@ class User(models.Model):
 
 
 class Paint(models.Model):
-    sub = models.ForeignKey(User, on_delete=models.CASCADE)
-    number = models.IntegerField(primary_key=True)
-    color = models.CharField(max_length=50)
-    width = models.IntegerField()
-    tool = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str(number):
-        return str(self.number)
-
-
-class Point(models.Model):
-    sub = models.ForeignKey(User, on_delete=models.CASCADE)
-    number = models.ForeignKey(Paint, on_delete=models.CASCADE)
-    point = models.IntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str(point):
-        return str(self.point)
-
-
-class Room(models.Model):
-    room_id = models.UUIDField(
+    id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         editable=False)
+    sub = models.ForeignKey(User, on_delete=models.CASCADE)
+    image_url = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self) -> str(room_id):
-        return str(self.room_id)
+    def __str__(self) -> str(id):
+        return str(id)
 
 
-class Message(models.Model):
-    message_id = models.UUIDField(
+class Comment(models.Model):
+    id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         editable=False)
-    room = models.ForeignKey(
-        Room,
-        related_name='messages',
-        on_delete=models.CASCADE
-    )
-    content = models.TextField()
+    comment = models.TextField()
+    sub = models.ForeignKey(User, on_delete=models.CASCADE)
+    paint_id = models.ForeignKey(Paint, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self) -> str(message_id):
-        return str(self.message_id)
+    def __str__(self) -> str(id):
+        return str(id)
