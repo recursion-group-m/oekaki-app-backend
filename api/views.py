@@ -1,38 +1,27 @@
 from rest_framework import viewsets
-from .models import Message, Room, User, Paint, Point
+from .models import Comment, User, Paint
 from .serializers import (
-    MessageSerializer,
-    RoomSerializer,
+    CommentSerializer,
     UserSerializer,
     PaintSerializer,
-    PointSerializer
 )
-from .filters import UserFilter, PaintFilter
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_class = UserFilter
 
 
 class PaintViewSet(viewsets.ModelViewSet):
     queryset = Paint.objects.all()
     serializer_class = PaintSerializer
-    filter_class = PaintFilter
 
 
-class PointViewSet(viewsets.ModelViewSet):
-    queryset = Point.objects.all()
-    serializer_class = PointSerializer
-
-
-class RoomViewSet(viewsets.ModelViewSet):
-    queryset = Room.objects.prefetch_related('messages')
-    serializer_class = RoomSerializer
-
-
-class MessageViewSet(viewsets.ModelViewSet):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ["paint_id"]
+    ordering = ['created_at']

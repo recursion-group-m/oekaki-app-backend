@@ -1,17 +1,13 @@
 from rest_framework import routers
 from .views import (
-    MessageViewSet,
-    RoomViewSet,
     UserViewSet,
     PaintViewSet,
-    PointViewSet
+    CommentViewSet
 )
 
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'paints', PaintViewSet, basename='Paints')
-router.register(r'points', PointViewSet, basename='Points')
-router.register(r'rooms', RoomViewSet)
-router.register(r'messages', MessageViewSet)
+router.register(r'paints', PaintViewSet, basename='paints')
+router.register(r'comments', CommentViewSet, basename='comments')
 urlpatterns = router.urls
