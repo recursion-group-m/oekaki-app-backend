@@ -1,7 +1,8 @@
 from rest_framework import viewsets
 from .models import Comment, User, Paint
 from .serializers import (
-    CommentSerializer,
+    ReadCommentSerializer,
+    WriteCommentSerializer,
     UserSerializer,
     PaintSerializer,
 )
@@ -19,9 +20,14 @@ class PaintViewSet(viewsets.ModelViewSet):
     serializer_class = PaintSerializer
 
 
-class CommentViewSet(viewsets.ModelViewSet):
+class ReadCommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+    serializer_class = ReadCommentSerializer
     filter_backends = [DjangoFilterBackend]
     filter_fields = ["paint_id"]
     ordering = ['created_at']
+
+
+class WriteCommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = WriteCommentSerializer
